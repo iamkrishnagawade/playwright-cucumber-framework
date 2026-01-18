@@ -1,1 +1,8 @@
 /node_modules
+/.idea
+/.vscode
+/dist
+/reports
+/.DS_Store
+/.env
+/.env.test

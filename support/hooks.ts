@@ -5,11 +5,17 @@ import { OurWorld } from "./world";
 let browser: Browser;
 
 BeforeAll(async () => {
-  browser = await chromium.launch({ headless: true });
+  browser = await chromium.launch({
+    headless: process.env.HEADLESS !== 'false',
+    slowMo: process.env.SLOW_MO ? parseInt(process.env.SLOW_MO) : 0,
+  });
 });
 
 Before(async function (this: OurWorld) {
-  this.context = await browser.newContext();
+  this.context = await browser.newContext({
+    viewport: { width: 1280, height: 720 },
+    recordVideo: { dir: 'test-results/videos' },
+  });
   this.page = await this.context.newPage();
 });
 

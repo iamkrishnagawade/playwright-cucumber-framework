@@ -3,7 +3,8 @@ import { expect } from '@playwright/test';
 import { OurWorld } from '../support/world';
 
 Given('I navigate to the login page', async function (this: OurWorld) {
-  await this.page?.goto('https://www.saucedemo.com/');
+    if(!this.page) throw new Error("Page is not initialized");
+    await this.page?.goto('https://www.saucedemo.com/');
 });
 
 When('I enter {string} and {string}', async function (this: OurWorld, username: string, password: string) {
@@ -13,6 +14,7 @@ When('I enter {string} and {string}', async function (this: OurWorld, username: 
 
 When('I click the login button', async function (this: OurWorld) {
   await this.page?.click('#login-button');
+  await this.page?.waitForLoadState('networkidle');
 });
 
 Then('I should see the {string} title', async function (this: OurWorld, expectedTitle: string) {

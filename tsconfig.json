@@ -22,12 +22,6 @@
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-
-    /* Paths */
-    "baseUrl": ".",
-    "paths": {
-      "*": ["node_modules/*", "src/*"]
-    },
     
     /* Playwright & Cucumber support */
     "types": ["node", "@playwright/test"]

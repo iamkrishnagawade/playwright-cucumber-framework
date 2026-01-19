@@ -46,5 +46,9 @@ After(async function (this: OurWorld, { result }) {
 });
 
 AfterAll(async () => {
+  try {
     await browser.close();
+  } catch (error) {
+    console.error('Failed to close browser:', error);
+  }
 });

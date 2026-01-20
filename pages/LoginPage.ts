@@ -1,37 +1,31 @@
-import { Page, Locator } from '@playwright/test';
+import { Page } from '@playwright/test';
 import { logger } from '../support/logger';
 import { TimeoutConfig, AppConfig } from '../support/config';
+import { PlaywrightWrappers } from '../helpers/PlaywrightWrappers';
 
 export class LoginPage {
   private readonly page: Page;
-  private readonly usernameInput: Locator;
-  private readonly passwordInput: Locator;
-  private readonly loginButton: Locator;
-  private readonly pageTitle: Locator;
   private readonly baseUrl: string;
+  private readonly base: PlaywrightWrappers;
 
   constructor(page: Page) {
     this.page = page;
     this.baseUrl = AppConfig.baseUrl;
-    // Configure locators with custom timeouts for potentially flaky selectors
-    this.usernameInput = page.locator('#user-name');
-    this.passwordInput = page.locator('#password');
-    this.loginButton = page.locator('#login-button');
-    this.pageTitle = page.locator('.title');
+    this.base = new PlaywrightWrappers(page);
   }
+
+  private Elements = {
+    usernameInput: '#user-name',
+    passwordInput: '#password',
+    loginButton: '#login-button',
+    pageTitle: '.title',
+  };
 
   async navigate() {
     logger.info(`Navigating to: ${this.baseUrl}`);
-    await this.page.goto(this.baseUrl, {
-      timeout: TimeoutConfig.navigation.default,
-      waitUntil: 'domcontentloaded',
-    });
+    await this.base.goto(this.baseUrl);
+    await this.base.waitForSelector(this.Elements.usernameInput);
 
-    // Wait for login form to be ready with custom timeout
-    await this.usernameInput.waitFor({
-      state: 'visible',
-      timeout: TimeoutConfig.element.default,
-    });
     logger.info('Login page loaded successfully');
   }
 
@@ -39,16 +33,9 @@ export class LoginPage {
     logger.info(`Attempting login for user: ${username}`);
 
     // Use custom timeouts for each interaction to handle flaky selectors
-    await this.usernameInput.fill(username, {
-      timeout: TimeoutConfig.element.default,
-    });
-    await this.passwordInput.fill(password, {
-      timeout: TimeoutConfig.element.default,
-    });
-    await this.loginButton.click({
-      timeout: TimeoutConfig.element.default,
-    });
-
+    await this.base.type(this.Elements.usernameInput, username);
+    await this.base.type(this.Elements.passwordInput, password);
+    await this.base.click(this.Elements.loginButton);
     logger.info('Login button clicked');
 
     // Wait for navigation to complete after login
@@ -60,12 +47,7 @@ export class LoginPage {
 
   async getTitle(): Promise<string | null> {
     // Wait for title element to be visible with custom timeout
-    await this.pageTitle.waitFor({
-      state: 'visible',
-      timeout: TimeoutConfig.assertion.visibility,
-    });
-    return await this.pageTitle.textContent({
-      timeout: TimeoutConfig.element.fast,
-    });
+    await this.base.waitForSelector(this.Elements.pageTitle);
+    return await this.base.getTextContent(this.Elements.pageTitle);
   }
 }

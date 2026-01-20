@@ -26,6 +26,12 @@
     /* Playwright & Cucumber support */
     "types": ["node", "@playwright/test"]
   },
-  "include": ["step-definitions/**/*.ts", "support/**/*.ts", "pages/**/*.ts", "features/**/*.ts"],
+  "include": [
+    "step-definitions/**/*.ts", 
+    "support/**/*.ts", 
+    "pages/**/*.ts", 
+    "features/**/*.ts", 
+    "helpers/**/*.ts"
+  ],
   "exclude": ["node_modules"]
 }

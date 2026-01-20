@@ -1,17 +1,20 @@
-import { Page } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 import { logger } from '../support/logger';
 import { TimeoutConfig, AppConfig } from '../support/config';
 import { PlaywrightWrappers } from '../helpers/PlaywrightWrappers';
+import assert from '../helpers/assert';
 
 export class LoginPage {
   private readonly page: Page;
   private readonly baseUrl: string;
   private readonly base: PlaywrightWrappers;
+  private readonly assert: assert;
 
   constructor(page: Page) {
     this.page = page;
     this.baseUrl = AppConfig.baseUrl;
     this.base = new PlaywrightWrappers(page);
+    this.assert = new assert(page);
   }
 
   private Elements = {
@@ -49,5 +52,11 @@ export class LoginPage {
     // Wait for title element to be visible with custom timeout
     await this.base.waitForSelector(this.Elements.pageTitle);
     return await this.base.getTextContent(this.Elements.pageTitle);
+  }
+
+  async assertTitleIs(expectedTitle: string) {
+    const actualTitle = await this.getTitle();
+    expect(actualTitle).toBe(expectedTitle);
+    logger.info(`Title assertion passed: ${actualTitle} === ${expectedTitle}`);
   }
 }

@@ -27,10 +27,10 @@
     "types": ["node", "@playwright/test"]
   },
   "include": [
-    "step-definitions/**/*.ts", 
-    "support/**/*.ts", 
-    "pages/**/*.ts", 
-    "features/**/*.ts", 
+    "step-definitions/**/*.ts",
+    "support/**/*.ts",
+    "pages/**/*.ts",
+    "features/**/*.ts",
     "helpers/**/*.ts"
   ],
   "exclude": ["node_modules"]

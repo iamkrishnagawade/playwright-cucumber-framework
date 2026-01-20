@@ -22,22 +22,26 @@ A robust test automation framework combining Playwright and Cucumber for BDD-sty
 ## 🔧 Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/iamkrishnagawade/playwright-cucumber-framework.git
 cd playwright-cucumber-framework
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Install Playwright browsers:
+
 ```bash
 npx playwright install chromium
 ```
 
 4. Create environment file (optional):
+
 ```bash
 cp .env.example .env
 ```
@@ -45,26 +49,31 @@ cp .env.example .env
 ## 🎯 Running Tests
 
 ### Run all tests:
+
 ```bash
 npm test
 ```
 
 ### Run in headed mode (visible browser):
+
 ```bash
 HEADLESS=false npm test
 ```
 
 ### Run with slow motion (for debugging):
+
 ```bash
 SLOW_MO=500 npm test
 ```
 
 ### Run specific tests by tags:
+
 ```bash
 TAGS=@smoke npm test
 ```
 
 ### Run against different environment:
+
 ```bash
 BASE_URL=https://staging.example.com npm test
 ```
@@ -73,12 +82,12 @@ BASE_URL=https://staging.example.com npm test
 
 Create a `.env` file in the root directory to configure test execution:
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `HEADLESS` | Run tests in headless mode | `true` |
-| `SLOW_MO` | Slow down execution (milliseconds) | `0` |
-| `BASE_URL` | Application base URL | `https://www.saucedemo.com` |
-| `TAGS` | Cucumber tags to filter tests | `not @skip` |
+| Variable   | Description                        | Default                     |
+| ---------- | ---------------------------------- | --------------------------- |
+| `HEADLESS` | Run tests in headless mode         | `true`                      |
+| `SLOW_MO`  | Slow down execution (milliseconds) | `0`                         |
+| `BASE_URL` | Application base URL               | `https://www.saucedemo.com` |
+| `TAGS`     | Cucumber tags to filter tests      | `not @skip`                 |
 
 ## 📁 Project Structure
 
@@ -124,17 +133,17 @@ Create a page class in the `pages/` directory:
 import { Page, Locator } from '@playwright/test';
 
 export class LoginPage {
-    private readonly page: Page;
-    private readonly usernameInput: Locator;
-    
-    constructor(page: Page) {
-        this.page = page;
-        this.usernameInput = page.locator('#user-name');
-    }
-    
-    async navigate() {
-        await this.page.goto(process.env.BASE_URL || 'https://example.com');
-    }
+  private readonly page: Page;
+  private readonly usernameInput: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.usernameInput = page.locator('#user-name');
+  }
+
+  async navigate() {
+    await this.page.goto(process.env.BASE_URL || 'https://example.com');
+  }
 }
 ```
 
@@ -147,7 +156,7 @@ import { Given, When, Then } from '@cucumber/cucumber';
 import { OurWorld } from '../support/world';
 
 Given('I navigate to the login page', async function (this: OurWorld) {
-    await this.loginPage.navigate();
+  await this.loginPage.navigate();
 });
 ```
 
@@ -158,7 +167,7 @@ Add your page object to `support/world.ts`:
 ```typescript
 export class OurWorld extends World {
   loginPage!: LoginPage;
-  
+
   async initPages() {
     this.loginPage = new LoginPage(this.page);
   }
@@ -183,11 +192,13 @@ export class OurWorld extends World {
 ## 📊 Test Reports
 
 After test execution, find the HTML report at:
+
 ```
 cucumber-report.html
 ```
 
 Open it in a browser to view:
+
 - Test execution summary
 - Pass/fail status for each scenario
 - Execution time
@@ -201,16 +212,19 @@ Open it in a browser to view:
 ## 🔍 Debugging
 
 ### Run single test:
+
 ```bash
 TAGS=@your-tag npm test
 ```
 
 ### Run in headed mode with slow motion:
+
 ```bash
 HEADLESS=false SLOW_MO=1000 npm test
 ```
 
 ### Disable parallel execution:
+
 Edit `cucumber.js` and set `parallel: 1`
 
 ## 🤝 Contributing
@@ -228,16 +242,19 @@ This project is licensed under the ISC License.
 ## 🐛 Troubleshooting
 
 ### Tests fail to start
+
 - Ensure Node.js version is 16+
 - Run `npm install` to install dependencies
 - Run `npx playwright install chromium`
 
 ### Browser doesn't launch
+
 - Check `HEADLESS` environment variable
 - Verify Playwright browsers are installed
 - Try running with `HEADLESS=false`
 
 ### Parallel execution issues
+
 - Set `parallel: 1` in `cucumber.js`
 - Check if browser resources are sufficient
 

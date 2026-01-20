@@ -4,7 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx cucumber-js"
+    "test": "npx cucumber-js",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write \"**/*.{ts,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,json,md}\"",
+    "code:check": "npm run format:check && npm run lint",
+    "code:fix": "npm run format && npm run lint:fix"
   },
   "repository": {
     "type": "git",
@@ -20,9 +26,20 @@
   "devDependencies": {
     "@cucumber/cucumber": "^12.5.0",
     "@playwright/test": "^1.57.0",
+    "@types/log4js": "^0.0.33",
     "@types/node": "^25.0.9",
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
     "playwright": "^1.57.0",
+    "prettier": "^3.4.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "log4js": "^6.9.1"
   }
 }

@@ -1,3 +1,5 @@
+require('dotenv').config(); // Loads variables from .env
+
 module.exports = {
   default: {
     formatOptions: { snippetInterface: 'async-await' },

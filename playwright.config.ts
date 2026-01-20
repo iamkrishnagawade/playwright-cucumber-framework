@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 /**
  * Playwright configuration for Cucumber BDD tests
- * 
+ *
  * Note: Since we're using Cucumber to run tests, some settings here serve as defaults
  * or are used by Playwright's browser automation features.
  */
@@ -23,7 +23,7 @@ export default defineConfig({
 
   // Configure retries
   fullyParallel: true,
-  
+
   // Fail the build on CI if you accidentally left test.only in the source code
   forbidOnly: !!process.env.CI,
 
@@ -68,7 +68,7 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { 
+      use: {
         ...devices['Desktop Chrome'],
         // Browser launch options
         launchOptions: {
@@ -81,7 +81,7 @@ export default defineConfig({
     // Uncomment to run tests on other browsers
     // {
     //   name: 'firefox',
-    //   use: { 
+    //   use: {
     //     ...devices['Desktop Firefox'],
     //     launchOptions: {
     //       headless: process.env.HEADLESS !== 'false',
@@ -91,7 +91,7 @@ export default defineConfig({
 
     // {
     //   name: 'webkit',
-    //   use: { 
+    //   use: {
     //     ...devices['Desktop Safari'],
     //     launchOptions: {
     //       headless: process.env.HEADLESS !== 'false',
